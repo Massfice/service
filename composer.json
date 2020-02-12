@@ -1,0 +1,19 @@
+{
+    "name": "massfice/service",
+    "description": "Services package for my diploma project.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Massfice",
+            "email": "adrian.marian.tomasz.larysz@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Massfice\\Service\\": "src/"
+        }
+    }
+}
