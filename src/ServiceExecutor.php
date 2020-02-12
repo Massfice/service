@@ -11,7 +11,7 @@ class ServiceExecutor {
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($curl, CURLOPT_VERBOSE, 1);
-        curl_setopt($curl, CURLOPT_URL, $object->url());
+        curl_setopt($curl, CURLOPT_URL, $object->url($data));
         $data = $object->data($data);
         if($data !== null) curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
         $object->prepare($curl);
