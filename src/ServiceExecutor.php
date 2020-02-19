@@ -15,7 +15,9 @@ class ServiceExecutor {
         $d = $object->data($data);
         if($d !== null) curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($d));
         $headers = $object->prepare($curl,$data);
-        if(count($headers) > 0) curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        $headers[] = "Content-Type: application/json";
+        $headers[] = "Accept: application/json";
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         $exec = curl_exec($curl);
 
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
