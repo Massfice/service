@@ -12,16 +12,23 @@ class ServiceExecutor {
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($curl, CURLOPT_VERBOSE, 1);
         curl_setopt($curl, CURLOPT_URL, $object->url($data));
-        $data = $object->data($data);
-        if($data !== null) curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
-        $object->prepare($curl);
+        $d = $object->data($data);
+        if($d !== null) curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($d));
+        $headers = $object->prepare($curl,$data);
+        if(count($headers) > 0) curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         $exec = curl_exec($curl);
 
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         curl_close($curl);
 
-        $object->callback($code, json_decode($exec,true));
+        if(empty($exec)) {
+            $exec = [];
+        } else {
+            $exec = json_decode($exec,true);
+        }
+
+        $object->callback($code, $exec);
         return $object;
     }
 }
